@@ -4,3 +4,4 @@ Thinking about structure.
   frameworks.
 * ABC? Enforce methods like game.loop, config.stop_conditoins etc?
 * Maybe add some common code, then add both framework and lib?
+* Add a dir for adidng games in a working state, yet to adhere to structure.

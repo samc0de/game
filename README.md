@@ -15,3 +15,9 @@ player: AI implementation of a game player.
 stat: The stats for win/lose history, mostly for AI to use in ML.  
 interface: Ways of launching game, AI battles, GUI, vs Human, api etc.  
 db: Optional db. (stat maybe unified into db).  
+
+# Staging
+
+A staging dir is provided which holds games (in their own subdirs) which don't
+yet follow the structure but are intended to be in a working state before
+following structure.

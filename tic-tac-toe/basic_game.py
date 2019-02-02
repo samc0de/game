@@ -24,31 +24,28 @@ class HumanPlayer(Player):
     print(self.name + '\'s turn!')
     if self.verbose:
       print('Available positions: ', available_positions)
-    coords = raw_input('Enter board coordinates where you wish to place mark:')
     while True:
+      coords = raw_input('Enter board coords where you wish to place mark:')
       separator = ',' if ',' in coords else ' '
       try:
-        int_coords = tuple(map(int, coords.split(separator)))
+        int_coords = tuple(map(int, coords.strip().split(separator)))
         assert len(int_coords) == 2
-        set_trace()
         if int_coords not in available_positions:
           print('That position is not available, choose another one...')
           continue
         return int_coords
       except (ValueError, AssertionError) as e:
+        set_trace()
         print('Invalid inputs, try again...')
         continue
 
 
 class Board(object):
   def __init__(self, verbose=False):
-    # self.board = tuple(tuple([0, 0] for _ in range(3)) for _ in range(3))
-    # self.board = tuple([0, 0, 0] for _ in range(3))
-    self.board = np.zeros((3, 3), dtype=int)
+    self.board = np.zeros((3, 3), dtype=np.character)
 
   def play(self, position, symbol):
-    set_trace()
-    if self.board[position] != 0:
+    if self.board[position] != '':
       # Should be a custom exc.
       raise ValueError('That position is not available')
     self.board[position] = symbol
@@ -57,7 +54,7 @@ class Board(object):
     return zip(*np.where(self.board==symbol))
 
   def get_available_positions(self):
-    return zip(*np.where(self.board==0))
+    return zip(*np.where(self.board==''))
 
 
 def is_won(board, symbol, positions, latest_move):
@@ -86,6 +83,9 @@ def game_loop(players, board):
     if is_won(board, first.symbol, positions, move):
       print('Winner: ' + first.name)
       return first
+
+    if not board.get_available_positions():
+      break
 
     move = second.play(board.get_available_positions())
     board.play(move, second.symbol)
